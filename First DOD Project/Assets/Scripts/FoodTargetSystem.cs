@@ -11,7 +11,6 @@ public partial struct FoodTargetSystem : ISystem
 {
     public void OnCreate(ref SystemState state)
     {
-        
     }
     
     public void OnDestroy(ref SystemState state)
@@ -21,13 +20,28 @@ public partial struct FoodTargetSystem : ISystem
     
     public void OnUpdate(ref SystemState state)
     {
-       
+        Entity entityToDestroy = Entity.Null;
+        
+        
         foreach (var foodTarget in SystemAPI.Query<RefRW<FoodTargetData>>())
         {
             foreach (var evt in SystemAPI.GetSingleton<SimulationSingleton>().AsSimulation().TriggerEvents)
             {
-                Debug.Log(evt);
+                entityToDestroy = evt.EntityA;
             }
+        }
+        
+        if (entityToDestroy != Entity.Null && !state.EntityManager.HasComponent<CharacterMovementData>(entityToDestroy))
+        {
+            var child = state.EntityManager.GetBuffer<Child>(entityToDestroy);
+            
+            foreach (var entity in child)
+            {
+                state.EntityManager.DestroyEntity(entity.Value);
+            }
+            
+            state.EntityManager.DestroyEntity(entityToDestroy);
+            
         }
     }
 }
