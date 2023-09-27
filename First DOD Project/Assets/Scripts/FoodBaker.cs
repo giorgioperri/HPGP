@@ -6,14 +6,15 @@ using UnityEngine;
 public class FoodBaker : MonoBehaviour
 {
     public float speed;
-    public float radius;
 }
 
 public struct FoodMovementData : IComponentData
 {
     public float speed;
-    public float radius;
 }
+
+public struct FoodStatusData : IComponentData
+{ }
 
 public class FoodMovementBaker : Baker<FoodBaker>
 {
@@ -23,7 +24,7 @@ public class FoodMovementBaker : Baker<FoodBaker>
         AddComponent(entity, new FoodMovementData
         {
             speed = authoring.speed,
-            radius = authoring.radius
         });
+        AddComponent(entity, new FoodStatusData());
     }
 }
