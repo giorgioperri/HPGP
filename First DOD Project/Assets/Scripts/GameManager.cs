@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.Mathematics;
 using UnityEngine;
 
 public enum GameStatus
@@ -20,6 +21,8 @@ public class GameManager : MonoBehaviour
     public int timer = 45;
     public TextMeshProUGUI foodLeftText;
     public GameStatus gameStatus = GameStatus.Playing;
+    
+    public float3 currentCharacterPosition = new float3(0,0,0);
 
     private void Awake()
     {
