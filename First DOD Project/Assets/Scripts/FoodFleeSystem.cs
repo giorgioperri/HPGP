@@ -44,8 +44,8 @@ public partial struct FoodFleeSystem : ISystem
             localTransform.ValueRW.Position = position;
         }
 
-        Debug.Log(foodLeft);
-        
+        GameManager.Instance.foodLeft = foodLeft;
+
         foreach (var (foodMovement, localTransform, entity) in SystemAPI.Query<RefRO<FoodMovementData>, RefRW<LocalTransform>>().WithEntityAccess())
         {
             if (!state.EntityManager.HasComponent<FoodStatusData>(entity))
